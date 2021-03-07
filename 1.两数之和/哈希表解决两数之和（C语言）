@@ -1,0 +1,28 @@
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* twoSum(int* nums, int numsSize, int target, int* returnSize){
+    //创建一个哈希表
+    int* hash = (int*)malloc(sizeof(int) * numsSize);
+    //返回结果的指针
+    int* result = (int*)malloc(sizeof(int) * 2);
+    //返回结果个数
+    *returnSize = 2;
+    //第一个数直接放入哈希表
+    hash[0] = nums[0];
+    //哈希表计算
+    for(int i = 1; i < numsSize; i++){
+        //计算目标值target减去对应的值nums[i]剩下的值是否已经存在于哈希表，存在则计算完毕，否则存入哈希表
+        int num = target - nums[i];
+        //C貌似没有哈希表直接使用的函数，其他语言可以简单一些
+        for(int j = 0; j < i; j++){
+            if(hash[j] == num){
+                result[0] = j;
+                result[1] = i;
+                return result;f
+            }
+        }
+        hash[i] = nums[i];
+    }
+    return result;
+}
