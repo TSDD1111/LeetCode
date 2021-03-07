@@ -1,0 +1,54 @@
+/**
+ * Definition for singly-linked list.
+ */
+
+typedef struct{
+    int val;
+    struct ListNode *next;
+}ListNode;
+
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2){
+    //创建一个链表用于存放计算结果
+    ListNode* l3 = malloc(sizeof(ListNode) * 1);
+    l3->val = (l1->val + l2->val) % 10;
+    l3->next = NULL;
+    int num = (l1->val + l2->val) / 10;
+    ListNode* m = l1;
+    ListNode* n = l2;
+    ListNode* z = l3;
+    //可能存在两者长度不同的情况，当一者最大位计算完毕后只需计算进位和另一者
+    while(m->next != NULL || n->next != NULL){
+        int sum = 0;
+        //l1长度较小时，只需计算l2和l2后续的数字
+        if(m->next == NULL){
+            sum = n->next->val;
+            n = n->next;
+        }
+        //l2长度较小时，只需计算l1和l1后续的数字
+        else if(n->next == NULL){
+            sum = m->next->val;
+            m = m->next;
+        }
+        //正常计算
+        else{
+            sum = m->next->val + n->next->val;
+            m = m->next;
+            n = n->next;
+        }
+        //对返回结果的链表+1
+        ListNode* q = malloc(sizeof(ListNode) * 1);
+        q->val = (num + sum) % 10; //余数
+        q->next = NULL;
+        num = (num + sum) / 10;  //进位
+        z->next = q;
+        z = z->next;
+    }
+    //判断最后计算结束时是否有进位
+    if(num > 0){
+        ListNode* q = malloc(sizeof(ListNode) * 1);
+        q->val = num;
+        q->next = NULL;
+        z->next = q;
+    }
+    return l3;
+}
