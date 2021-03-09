@@ -1,5 +1,9 @@
+//滑动窗口问题
+//例如字符串"abcabc",要求无重复子串，可以按顺序判断，当判断到"abca"时，只需将首字符位置右移重复字符下一个即可排除重复字符。
+//"abccba"同理，如读取到"abcc"只需右移到"c'+"ba"。
+
 int lengthOfLongestSubstring(char * s){
-    //字符串长度和每次回溯的位置
+    //字符串长度和首字符位置
     int length = 0, fir = 0;
     //执行循环来判断是否重复
     for(int i = 0; s[i] != NULL; i++){
@@ -22,9 +26,9 @@ int lengthOfLongestSubstring(char * s){
                 if(length < i - j){
                     length = i - j;
                 }
-                //回溯位置，从重复字符后重新执行
+                //回溯位置,fir表示判断位置开始，从重复字符后开始，i表示主字符串，可以继续往下走
+                //例如"abcabc"，走到第二个a时，此时fir到重复字符"a"的下一个即1的位置（从0开始），i按顺序走即可
                 fir = j + 1;
-                i = fir;
                 break;
             }
         }
