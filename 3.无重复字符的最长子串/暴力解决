@@ -1,0 +1,33 @@
+int lengthOfLongestSubstring(char * s){
+    //字符串长度和每次回溯的位置
+    int length = 0, fir = 0;
+    //执行循环来判断是否重复
+    for(int i = 0; s[i] != NULL; i++){
+        int count = 1;
+        //如果单个字符时无法判断后续，直接赋值
+        if(i == 0){
+            length = 1;
+        }
+        //判断前面字符是否有重复的
+        for(int j = fir; j < i; j++){
+            //不相同时，长度加1，并取最大长度
+            if(s[j] != s[i]){
+                count++;
+                if(length < count){
+                    length = count;
+                }
+            }
+            //相同时，判断相同字符之间的长度与已存长度大小，取大者
+            else{
+                if(length < i - j){
+                    length = i - j;
+                }
+                //回溯位置，从重复字符后重新执行
+                fir = j + 1;
+                i = fir;
+                break;
+            }
+        }
+    }
+    return length;
+}
