@@ -1,0 +1,54 @@
+//直接通过对两个数组进行排序，一直排序到中位数位置时停止，并返回中位数结果
+
+double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size){
+    //求得中位数位置+1，奇数单个，偶数第二个
+    int midsum = nums1Size + nums2Size;
+    int mid = midsum / 2 + 1;
+    //分配一个总的数组存放新的顺序
+    int* num = (int*)malloc(sizeof(int) * mid);
+    //排序的总位置，以及两个数组的当前位置
+    int count = 0, j = 0, i = 0;
+    //双循环进行判断排序
+    for(; i < nums1Size;){
+        //当第一个数组均小于第二个时，需保证在第二个循环能跳出，即i < nums1Size
+        for(; j < nums2Size && i < nums1Size;){
+            if(nums1[i] < nums2[j]){
+                num[count] = nums1[i];
+                count++;
+                i++;
+            }
+            else{
+                num[count] = nums2[j];
+                count++;
+                j++;
+            }
+            //当排序的数字到达中位数时，即可结束判断
+            if(count == mid){
+                break;
+            }
+        }
+        if(mid == count){
+            break;
+        }
+        if(j == nums2Size && i < nums1Size){
+            num[count] = nums1[i];
+            i++;
+            count++;
+        }
+    }
+    //当中位数未到达且第一个数组完全放入时，只需逐个判断第二个数组
+    if(j < nums2Size && count < mid){
+        for(; count < mid; j++, count++){
+            num[count] = nums2[j];
+        }
+    }
+    //判断是否奇数情况还是偶数情况
+    double midnum = 0.0;
+    if(midsum % 2 == 1){
+        midnum = (double)num[mid - 1];
+    }
+    else{
+        midnum = (double)(num[mid - 2] + num[mid - 1]) / 2;
+    }
+    return midnum;
+}
