@@ -1,0 +1,105 @@
+//有bug待解决
+
+
+double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size){
+    int judge = 0, mid = 0;
+    double midnum = 0.0;
+    if((nums1Size + nums2Size) % 2 == 1){
+        mid = (nums1Size + nums2Size + 1) / 2;
+        judge = 1;
+    }
+    else{
+        mid = (nums1Size + nums2Size) / 2;
+    }
+    int i = 0, j = 0;
+    while(mid > 0 && nums1Size != 0 && nums2Size != 0){
+        if(mid / 2 - 1 + i >= nums1Size && mid > 1){
+            if(nums1[nums1Size - 1] < nums2[nums1Size - 1]){
+                mid = mid - nums1Size;
+                if(judge == 1){
+                    midnum = nums2[j + mid - 1];
+                }
+                else{
+                    midnum = (double)(nums2[j + mid - 1] + nums2[j + mid]) / 2;
+                }
+                return midnum;
+            }
+            else{
+                mid = mid - nums1Size;
+                j = j + nums1Size;
+            }
+        }
+        else if(mid / 2 - 1 + j >= nums2Size && mid > 1){
+            if(nums2[nums2Size - 1] < nums1[nums2Size - 1]){
+                mid = mid - nums2Size;
+                if(judge == 1){
+                    midnum = nums1[i + mid - 1];
+                }
+                else{
+                    midnum = (double)(nums1[i + mid - 1] + nums1[i + mid]) / 2;
+                }
+                return midnum;
+            }
+            else{
+                mid = mid - nums2Size;
+                i = i + nums2Size;
+            }            
+        }
+        else if(mid > 1){
+            if(nums1[mid / 2 - 1 + i] > nums2[mid / 2 - 1 + j]){
+                j = j + mid / 2;
+            }
+            else{
+                i = i + mid / 2;
+            }
+            mid = mid - mid / 2;
+        }
+        if(mid == 1){
+            if(judge == 1){
+                if(nums1[i] < nums2[j] && i < nums1Size){
+                    midnum = nums1[i];
+                }
+                else{
+                    midnum = nums2[j];
+                }
+                return midnum;
+            }
+            else{
+                if(nums1[i] < nums2[j] && i < nums1Size){
+                    if(i + 1 < nums1Size && nums1[i + 1] < nums2[j]){
+                        midnum = (double)(nums1[i] + nums1[i + 1]) / 2;
+                    }
+                    else{
+                        midnum = (double)(nums1[i] + nums2[j]) / 2;
+                    }
+                }
+                else{
+                    if(j + 1 < nums2Size && nums2[j + 1] < nums1[i]){
+                        midnum = (double)(nums2[j] + nums2[j + 1]) / 2;
+                    }
+                    else{
+                        midnum = (double)(nums1[i] + nums2[j]) / 2;
+                    }
+                }
+                return midnum;
+            }
+        }
+    }
+    if(nums1Size == 0){
+        if(judge == 1){
+            midnum = nums2[mid - 1];
+        }
+        else{
+            midnum = (double)(nums2[mid - 1] + nums2[mid]) / 2;
+        }
+    }
+    else if(nums2Size == 0){
+        if(judge == 1){
+            midnum = nums1[mid - 1];
+        }
+        else{
+            midnum = (double)(nums1[mid - 1] + nums1[mid]) / 2;
+        }
+    }
+    return midnum;
+}
