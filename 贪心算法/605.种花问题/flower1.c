@@ -1,4 +1,5 @@
 //直接利用贪心，可以种花就记1个位置。
+//也可以在数组前后各加1个0，这样只需判断中间数组是否存在连续的3个0即可，判断条件更简单了。
 
 bool canPlaceFlowers(int* flowerbed, int flowerbedSize, int n){
     for(int i = 0; i < flowerbedSize; i++){
