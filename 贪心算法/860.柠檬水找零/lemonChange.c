@@ -23,5 +23,5 @@ bool lemonadeChange(int* bills, int billsSize){
             return false;
         }
     }
-    return five >= 0 && ten >= 0;
+    return true;
 }
