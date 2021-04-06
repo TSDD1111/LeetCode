@@ -19,3 +19,16 @@ int removeDuplicates(int* nums, int numsSize){
     }
     return index;
 }
+
+//修改后的更简洁的代码
+//直接根据修改后的index前的数字判断是否存在重复即可
+
+// int removeDuplicates(int* nums, int numsSize){
+//     int index = 0;
+//     for(int i = 0; i < numsSize; i++){
+//         if(index < 2 || nums[i] != nums[index - 2]){
+//             nums[index++] = nums[i];
+//         }
+//     }
+//     return index;
+// }
